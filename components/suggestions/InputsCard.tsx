@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react'
-import Input from './Input'
+import Input from './FilterButton'
 import { useState } from 'react'
 
 const inputs = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature']

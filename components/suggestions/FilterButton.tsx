@@ -2,13 +2,13 @@ import { Button } from '@chakra-ui/react'
 import React from 'react'
 
 
-interface InputProps {
+interface FilterButtonProps {
   name: string;
   selected: boolean;
   onClick: () => void;
 }
 
-const Input = ({name, onClick, selected}: InputProps) => {
+const FilterButton = ({name, onClick, selected}: FilterButtonProps) => {
   return (
     <Button
       onClick={onClick} 
@@ -22,4 +22,4 @@ const Input = ({name, onClick, selected}: InputProps) => {
   )
 }
 
-export default Input
+export default FilterButton
