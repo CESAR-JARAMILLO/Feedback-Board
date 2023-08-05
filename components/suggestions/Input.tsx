@@ -4,15 +4,18 @@ import React from 'react'
 
 interface InputProps {
   name: string;
+  selected: boolean;
+  onClick: () => void;
 }
 
-const Input = ({name}: InputProps) => {
+const Input = ({name, onClick, selected}: InputProps) => {
   return (
-    <Button 
+    <Button
+      onClick={onClick} 
       fontWeight="semibold" 
       borderRadius="10px" 
-      bg="#F2F4FF" 
-      color="#4661E6" 
+      bg={selected ? "#4661E6" : "#F2F4FF" }
+      color={selected ? "#FFF" : "#4661E6" }
     >
       {name}
     </Button>
