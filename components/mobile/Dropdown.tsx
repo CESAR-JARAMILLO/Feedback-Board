@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react'
 import React from 'react'
-import Inputs from '../suggestions/InputsCard'
+import Inputs from '../suggestions/FilterCard'
 
 const Dropdown = () => {
   return (
