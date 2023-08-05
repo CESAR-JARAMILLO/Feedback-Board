@@ -1,3 +1,4 @@
+import Dropdown from '@/components/mobile/Dropdown'
 import Header from '@/components/mobile/Header'
 import React, { useState } from 'react'
 
@@ -14,6 +15,7 @@ const Home = () => {
         onClick={handleHamburgerClick} 
         hamburgerClicked={hamburgerClicked}
       />
+      {hamburgerClicked && (<Dropdown />)}
       Home
     </>
   )
