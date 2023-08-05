@@ -1,6 +1,14 @@
-import { Container, Flex, Image, Text } from '@chakra-ui/react'
+import { Flex, Image, Text } from '@chakra-ui/react'
+import { useState } from 'react'
 
 const Header = () => {
+  const [hamburgerClicked, setHamburgerClicked] = useState(false)
+
+  const handleHamburgerClick = (event: React.MouseEvent<HTMLImageElement>) => {
+    event.preventDefault()
+    setHamburgerClicked(!hamburgerClicked);
+  }
+
   return (
     <Flex 
       backgroundImage="url(/images/mobile/background-header.png)" 
@@ -10,11 +18,11 @@ const Header = () => {
       px="24px" 
       justifyContent="space-between"
     >
-      <Container>
+      <Flex direction="column">
         <Text fontSize="15px" color="white" fontWeight="bold">Front End Mentor</Text>
         <Text fontSize="13px" fontWeight="medium" color="white">Feedback Board</Text>
-      </Container>
-      <Image h="17px" mr="2px" my="auto" src='/images/mobile/icon-hamburger.svg'/>
+      </Flex>
+        <Image _hover={{cursor: "pointer"}} onClick={handleHamburgerClick}  h="17px" mr="2px" my="auto" src={hamburgerClicked ? '/images/mobile/icon-close.svg' : '/images/mobile/icon-hamburger.svg'}/>
     </Flex>
   )
 }
