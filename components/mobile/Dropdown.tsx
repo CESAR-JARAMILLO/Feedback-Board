@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react'
 import React from 'react'
-import Inputs from '../suggestions/FilterCard'
+import FilterCard from '../suggestions/FilterCard'
+import RoadmapCard from '../suggestions/RoadmapCard'
 
 const Dropdown = () => {
   return (
@@ -10,8 +11,11 @@ const Dropdown = () => {
         ml="auto" 
         bg='#F7F8FD' 
         w="80vw"
+        direction="column"
+        gap={6}
       >
-        <Inputs />
+        <FilterCard />
+        <RoadmapCard />
       </Flex>
     </Flex>
   )
