@@ -1,5 +1,4 @@
 import { Container, Flex, Image, Text } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 
 const Header = () => {
   return (
