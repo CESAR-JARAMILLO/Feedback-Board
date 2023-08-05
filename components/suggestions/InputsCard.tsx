@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const inputs = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature']
 
-const Inputs = () => {
+const InputsCard = () => {
   const [selectedInput, setSelectedInput] = useState<string | null>(null)
 
   const handleClick = (inputName: string) => () => {
@@ -20,4 +20,4 @@ const Inputs = () => {
   )
 }
 
-export default Inputs
+export default InputsCard
