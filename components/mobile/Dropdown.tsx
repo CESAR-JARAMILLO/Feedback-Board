@@ -5,7 +5,7 @@ import RoadmapCard from '../suggestions/RoadmapCard'
 
 const Dropdown = () => {
   return (
-    <Flex bg="#979797" h="95vh" width="100vw">
+    <Flex bg="rgba(0, 0, 0, 0.5)" h="95vh" width="100vw">
       <Flex 
         p="24px" 
         ml="auto" 
