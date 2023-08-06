@@ -1,5 +1,6 @@
 import Dropdown from '@/components/mobile/Dropdown'
 import Header from '@/components/mobile/Header'
+import FilterHeader from '@/components/suggestions/FilterHeader'
 import React, { useState } from 'react'
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
         hamburgerClicked={hamburgerClicked}
       />
       {hamburgerClicked && (<Dropdown />)}
+      <FilterHeader />
       Home
     </>
   )
