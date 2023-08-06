@@ -4,7 +4,7 @@ import { Flex } from '@chakra-ui/react'
 
 const Suggestions = () => {
   return (
-    <Flex mx="24px" mt="32px" borderRadius={10}>
+    <Flex mx="24px" mt="32px" >
       <Suggestion />
     </Flex>
   )

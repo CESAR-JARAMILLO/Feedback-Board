@@ -3,7 +3,7 @@ import React from 'react'
 
 const Suggestion = () => {
   return (
-    <Flex fontSize="13px" p="24px" direction="column" bg="#FFF">
+    <Flex fontSize="13px" p="24px" direction="column" bg="#FFF" borderRadius={10}>
       <Box mb="8px">
         <Text mb="9px" fontWeight="bold">Add tags for solutions</Text>
         <Text color="#647196">Easier to search for solutions based on a specific stack.</Text>
