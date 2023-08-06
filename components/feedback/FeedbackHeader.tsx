@@ -3,7 +3,7 @@ import React from 'react'
 
 const FeedbackHeader = () => {
   return (
-    <Flex m="24px" fontSize="13px" justifyContent="space-between">
+    <Flex mb="24px" fontSize="13px" justifyContent="space-between">
       <Flex gap={2} alignItems="center">
         <Image h={3} src="/images/shared/icon-arrow-left.svg" />
         <Text fontWeight="bold">Go Back</Text>
