@@ -1,13 +1,14 @@
 import FeedbackHeader from '@/components/feedback/FeedbackHeader'
-import { Box, Button, Flex, Input, Select, Text, Textarea } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Input, Select, Text, Textarea } from '@chakra-ui/react'
 import React from 'react'
 
 const EditPage = () => {
   return (
     <Box p="24px" bg="#F2F4FE">
       <FeedbackHeader />
-      <Flex direction="column" bg="#FFF" borderRadius={10} p="24px">
-        <Text mb="24px" fontSize="18px" fontWeight="bold" color="#3A4374">Editing "Add a dark theme option"</Text>
+      <Flex direction="column" bg="#FFF" borderRadius={10} p="24px" position="relative">
+        <Image position="absolute" top="-20px" h="40px" w="40px" src="/images/shared/icon-edit-feedback.svg" />
+        <Text my="24px" fontSize="18px" fontWeight="bold" color="#3A4374">Editing "Add a dark theme option"</Text>
 
         <Flex fontSize="13px" direction="column">
           <Text color="#3A4374" fontWeight="bold">Feedback Title</Text>
