@@ -1,5 +1,6 @@
 import { Button, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import React from 'react'
+import AddFeedbackBtn from '../buttons/AddFeedbackBtn'
 
 const EmptySuggestions = () => {
   return (
@@ -8,7 +9,7 @@ const EmptySuggestions = () => {
         <Image h="108px" w="102px" src="/images/suggestions/illustration-empty.svg" />
         <Text fontSize="18px" fontWeight="bold" >There  is no feedback yet.</Text>
         <Text fontSize="13px" color="#647196" >Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.</Text>
-        <Button w="134px" h="40px" bg="#AD1FEA" color="#F2F4FE" fontSize="13px" fontWeight="bold" >+ Add Feedback</Button>
+        <AddFeedbackBtn />
       </Flex>
     </Flex>
   )

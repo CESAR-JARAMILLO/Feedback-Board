@@ -1,3 +1,4 @@
+import AddFeedbackBtn from '@/components/buttons/AddFeedbackBtn'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 import { Box, Button, Divider, Flex, Image, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
@@ -17,7 +18,7 @@ const RoadmapPage = () => {
           </Flex>
           <Text mt="4px" fontSize="18px" fontWeight="bold">Roadmap</Text>
         </Flex>
-        <Button w="134px" h="40px" bg="#AD1FEA" color="#F2F4FE" fontSize="13px" fontWeight="bold" borderRadius={10} >+ Add Feedback</Button>
+        <AddFeedbackBtn />
       </Flex>
 
       <Flex fontSize="13px" fontWeight="bold" borderBottom="1px solid #8C92B3" h="60px" w="100%">

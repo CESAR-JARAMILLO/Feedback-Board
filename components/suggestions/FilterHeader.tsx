@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { Button, Flex, Image, Text } from '@chakra-ui/react'
 import React from 'react'
+import AddFeedbackBtn from '../buttons/AddFeedbackBtn'
 
 const FilterHeader = () => {
   return (
@@ -10,7 +11,7 @@ const FilterHeader = () => {
         <Text color="#F2F4FE" fontSize="13px" fontWeight="bold" >Most Upvotes</Text>
         <ChevronDownIcon boxSize={5} color="#F2F4FE" />
       </Flex>
-      <Button w="134px" h="40px" bg="#AD1FEA" color="#F2F4FE" fontSize="13px" fontWeight="bold" >+ Add Feedback</Button>
+      <AddFeedbackBtn />
     </Flex>
   )
 }
