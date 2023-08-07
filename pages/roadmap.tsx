@@ -12,7 +12,6 @@ const RoadmapPage = () => {
       <Flex py="26px" px="24px" bg="#373F68" color="#FFF" fontSize="13px" justifyContent="space-between" alignItems="center">
         <Flex direction="column">
           <Flex as="button" onClick={() => router.push("/")} gap={2} alignItems="center">
-            {/* <Image fill="white" h={3} src="/images/shared/icon-arrow-left.svg" /> */}
             <ChevronLeftIcon boxSize={5} />
             <Text fontWeight="bold">Go Back</Text>
           </Flex>
@@ -73,7 +72,6 @@ const RoadmapPage = () => {
           </Box>
           <Button
             w="50%"
-            // onClick={onClick} 
             fontSize="13px"
             fontWeight="semibold" 
             borderRadius="10px" 
