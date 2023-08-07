@@ -10,7 +10,8 @@ const FeedbackHeader = () => {
         <Image h={3} src="/images/shared/icon-arrow-left.svg" />
         <Text fontWeight="bold">Go Back</Text>
       </Flex>
-      <Button w="119px" h="40px" bg="#4661E6" color="#F2F4FE" fontSize="13px" fontWeight="bold" borderRadius={10} >Edit Feedback</Button>
+      {/* Add logic to handle feedback data pushed to edit page */}
+      <Button onClick={() => router.push("feedback/edit")} w="119px" h="40px" bg="#4661E6" color="#F2F4FE" fontSize="13px" fontWeight="bold" borderRadius={10} >Edit Feedback</Button>
     </Flex>
   )
 }
