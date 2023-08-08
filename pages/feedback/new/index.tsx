@@ -1,8 +1,71 @@
 import FeedbackHeader from '@/components/feedback/FeedbackHeader'
 import { Box, Button, Flex, Image, Input, Select, Text, Textarea } from '@chakra-ui/react'
-import React from 'react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+
+const categoryList = [
+  "UI",
+  "UX",
+  "Enhancement",
+  "Bug",
+  "Feature",
+]
 
 const NewFeedbackPage = () => {
+  const [title, setTitle] = useState('')
+  const [categories, setCategories] = useState<string[]>([])
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [detail, setDetail] = useState('')
+  const supabase = useSupabaseClient()
+  const router = useRouter()
+
+  useEffect(() => {
+    setCategories(categoryList)
+  }, [])
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value)
+  }
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value)
+  }
+
+  const handledetailChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDetail(e.target.value)
+  }
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  
+    // Add loading state
+    try {
+      const { data, error } = await supabase
+        .from('feedback')
+        .upsert({
+          user_id: '9f2e320d-70f1-4621-9444-72b722b1a856',
+          title: title,
+          category: selectedCategory,
+          detail: detail,
+        });
+  
+      if (error) {
+        console.error("An error occurred:", error);
+        console.log(selectedCategory)
+        return;
+      }
+  
+      // Handle Success
+      console.log('success')
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+      // Restet loading state
+      router.push('/')
+    }
+  };
+
   return (
     <Box h="100vh" p="24px" bg="#F2F4FE">
       <FeedbackHeader />
@@ -13,7 +76,8 @@ const NewFeedbackPage = () => {
         <Flex fontSize="13px" direction="column">
           <Text color="#3A4374" fontWeight="bold">Feedback Title</Text>
           <Text mt="4px" mb="16px" color="#647196">Add a short, descriptive headline</Text>
-          <Input  
+          <Input
+            onChange={handleTitleChange}
             color="#3A4374" 
             h="48px" 
             variant='filled' 
@@ -30,8 +94,9 @@ const NewFeedbackPage = () => {
         <Flex mt="24px" fontSize="13px" direction="column">
           <Text color="#3A4374" fontWeight="bold">Category</Text>
           <Text mt="4px" mb="16px" color="#647196">Choose a category for your feedback</Text>
-          <Select 
-            placeholder='Feature'
+          <Select
+            onChange={handleCategoryChange}
+            placeholder={categories[1]}
             color="#3A4374" 
             h="48px" 
             variant='filled' 
@@ -42,16 +107,17 @@ const NewFeedbackPage = () => {
               }
             }} 
           >
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
+            {categories.map((category: string, index: number) => (
+              <option key={index} value={category}>{category}</option>
+            ))}
           </Select>
         </Flex>
         
         <Flex mt="24px" fontSize="13px" direction="column">
           <Text color="#3A4374" fontWeight="bold">Feedback Detail</Text>
           <Text mt="4px" mb="16px" color="#647196">Include any specific comments on what should be improved, added, etc.</Text>
-          <Textarea 
+          <Textarea
+            onChange={handledetailChange}
             color="#3A4374" 
             h="48px" 
             variant='filled'
@@ -59,7 +125,7 @@ const NewFeedbackPage = () => {
         </Flex>
 
         <Flex direction="column" mt="40px" gap="16px">
-          <Button bg="#AD1FEA" color="#F2F4FE" borderRadius={10} >Save Changes</Button>
+          <Button onClick={handleSubmit} bg="#AD1FEA" color="#F2F4FE" borderRadius={10} >Save Changes</Button>
           <Button bg="#3A4374" color="#F2F4FE" borderRadius={10} >Cancel</Button>
         </Flex>
       </Flex>
