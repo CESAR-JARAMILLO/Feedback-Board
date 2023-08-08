@@ -4,6 +4,7 @@
   import { useRouter } from 'next/router'
   import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import EmptySuggestions from './EmptySuggestions'
+import Link from 'next/link'
 
   const Suggestions = () => {
     const [suggestions, setSuggestions] = useState<any[] | null>(null)
@@ -35,13 +36,17 @@ import EmptySuggestions from './EmptySuggestions'
       getSuggestions()
     }, [])
 
+    // const handleSuggestionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    //   console.log('click')
+    // }
+
     return (
       <Flex gap="16px" direction="column" mx="24px" mt="32px" >
         {suggestions ? (
           suggestions.map((suggestion, index) => (
-            <Box onClick={() => console.log()} as="button" key={index}>
+            <Link href={`/feedback/edit/${suggestion.id}`} key={index}>
               <Suggestion suggestion={suggestion} />
-            </Box>
+            </Link>
           ))
         ): (
           <EmptySuggestions />
