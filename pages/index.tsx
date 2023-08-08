@@ -14,7 +14,7 @@ const Home = () => {
     setHamburgerClicked(!hamburgerClicked);
   }
   return (
-    <Box h="100vh" bg="#F2F4FE" pos="relative">
+    <Box bg="#F2F4FE" pos="relative">
       <Header 
         onClick={handleHamburgerClick} 
         hamburgerClicked={hamburgerClicked}
@@ -22,7 +22,6 @@ const Home = () => {
       {hamburgerClicked && (<Box pos="absolute" top="74px" zIndex={10} width="full"><Dropdown /></Box>)}
       <FilterHeader />
       <Suggestions />
-      <EmptySuggestions />
     </Box>
   )
 }
