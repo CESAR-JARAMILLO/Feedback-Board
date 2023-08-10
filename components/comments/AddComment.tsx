@@ -2,12 +2,14 @@ import { Button, Flex, Text, Textarea } from '@chakra-ui/react'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import React, { useContext, useState } from 'react'
 import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
+import { useCurrentUserProfile } from '@/components/context/CurrentUserProfileContext';
 
 const AddComment = () => {
   const [comment, setComment] = useState('')
   const supabase = useSupabaseClient()
   const user = useUser()
   const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
+  const { userProfile } = useCurrentUserProfile();
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault()
@@ -21,8 +23,8 @@ const AddComment = () => {
         .insert({
           suggestion_id: selectedSuggestionId,
           user_id: user?.id,
-          name: "Cesar Jaramillo",
-          tag: "@cesarthebest",
+          name: userProfile?.full_name,
+          tag: userProfile?.tag,
           comment: comment
         })
   
@@ -38,6 +40,7 @@ const AddComment = () => {
       // router.push('/')
     }
   }
+
   return (
     <Flex direction="column" bg="#FFF" borderRadius={10} my="24px" p="24px" position="relative">
       <Text textAlign="start" mb="24px" fontSize="18px" fontWeight="bold" color="#3A4374">Add Comment</Text>
