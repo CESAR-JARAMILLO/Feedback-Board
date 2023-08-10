@@ -1,14 +1,56 @@
 import FeedbackHeader from '@/components/feedback/FeedbackHeader'
 import { Box, Button, Flex, Image, Input, Select, Text, Textarea } from '@chakra-ui/react'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+
+interface Suggestion {
+  id: string;
+  title: string;
+  detail: string;
+  category: string;
+}
 
 const EditPage = () => {
+  const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
+  const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
+  const supabase = useSupabaseClient()
+
+  useEffect(() => {
+    const getSuggestion = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('suggestions')
+          .select()
+          .eq('id', selectedSuggestionId)
+    
+        if (error) {
+          console.error("An error occurred:", error);
+          return;
+        }
+    
+        // Handle Success
+        if (data && data.length > 0) {
+          setSuggestion(data[0]);
+        }
+
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      } finally {
+        // Restet loading state
+      }
+    }
+
+    getSuggestion()
+  }, [])
+
+
   return (
     <Box p="24px" bg="#F2F4FE">
       <FeedbackHeader />
       <Flex direction="column" bg="#FFF" borderRadius={10} p="24px" position="relative">
         <Image position="absolute" top="-20px" h="40px" w="40px" src="/images/shared/icon-edit-feedback.svg" />
-        <Text my="24px" fontSize="18px" fontWeight="bold" color="#3A4374">Editing "Add a dark theme option"</Text>
+        <Text my="24px" fontSize="18px" fontWeight="bold" color="#3A4374">Editing {suggestion?.title}</Text>
 
         <Flex fontSize="13px" direction="column">
           <Text color="#3A4374" fontWeight="bold">Feedback Title</Text>
@@ -17,13 +59,7 @@ const EditPage = () => {
             color="#3A4374" 
             h="48px" 
             variant='filled' 
-            placeholder='Add a dark theme option'
-            sx={{ 
-              "::placeholder": {
-                fontSize: "13px",
-                color: "#3A4374"
-              }
-            }} 
+            value={suggestion?.title}
           />
         </Flex>
         
@@ -31,16 +67,10 @@ const EditPage = () => {
           <Text color="#3A4374" fontWeight="bold">Category</Text>
           <Text mt="4px" mb="16px" color="#647196">Choose a category for your feedback</Text>
           <Select 
-            placeholder='Feature'
+            value={suggestion?.category}
             color="#3A4374" 
             h="48px" 
             variant='filled' 
-            sx={{ 
-              "::placeholder": {
-                fontSize: "13px",
-                color: "#3A4374"
-              }
-            }} 
           >
             <option value='option1'>Option 1</option>
             <option value='option2'>Option 2</option>
@@ -52,16 +82,10 @@ const EditPage = () => {
           <Text color="#3A4374" fontWeight="bold">Update Status</Text>
           <Text mt="4px" mb="16px" color="#647196">Change feature state</Text>
           <Select 
-            placeholder='Planned'
+            value='Planned'
             color="#3A4374" 
             h="48px" 
             variant='filled' 
-            sx={{ 
-              "::placeholder": {
-                fontSize: "13px",
-                color: "#3A4374"
-              }
-            }} 
           >
             <option value='option1'>Option 1</option>
             <option value='option2'>Option 2</option>
@@ -73,16 +97,10 @@ const EditPage = () => {
           <Text color="#3A4374" fontWeight="bold">Feedback Detail</Text>
           <Text mt="4px" mb="16px" color="#647196">Include any specific comments on what should be improved, added, etc.</Text>
           <Textarea 
-            placeholder='It would help people with light sensitivities and who prefer dark mode.'
+            value={suggestion?.detail}
             color="#3A4374" 
             h="48px" 
             variant='filled' 
-            sx={{ 
-              "::placeholder": {
-                fontSize: "13px",
-                color: "#3A4374"
-              }
-            }} 
           />
         </Flex>
 
