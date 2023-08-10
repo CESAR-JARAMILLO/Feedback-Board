@@ -1,7 +1,17 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 const Comment = () => {
+  const [name, setName] = useState('')
+  const [tag, setTag] = useState('')
+  const [comment, setComment] = useState('')
+  const [avatarUrl, setAvatarUrl] = useState('')
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
+  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => setTag(e.target.value);
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value);
+  const handleAvatarUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => setAvatarUrl(e.target.value);
+
   return (
     <Box w="100%" fontSize="13px" p="24px">
       <Flex justifyContent="space-between">
