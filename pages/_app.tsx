@@ -3,6 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
+import { SelectedSuggestionProvider } from '@/components/context/SelectedSuggestionContext'
 
 export default function App({ Component, pageProps }: AppProps<{ initialSession: Session }>) {
   const [supabaseClient] = useState(() => createPagesBrowserClient())
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
       >
-        <Component {...pageProps} />
+        <SelectedSuggestionProvider>
+          <Component {...pageProps} />
+        </SelectedSuggestionProvider>
       </SessionContextProvider>
     </ChakraProvider>
   )
