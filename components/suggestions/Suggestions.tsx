@@ -43,10 +43,10 @@ const Suggestions = () => {
   };
 
   return (
-    <Flex gap="16px" direction="column" mx="24px" mt="32px" >
+    <Flex minH="90vh" gap="16px" direction="column" mx="24px" mt="32px" >
       {suggestions && suggestions.length > 0 ? (
         suggestions.map((suggestion, index) => (
-          <Box as="button" onClick={handleClick(suggestion.id)} key={index}>
+          <Box onClick={handleClick(suggestion.id)} key={index}>
             <Suggestion suggestion={suggestion} />
           </Box>
         ))
