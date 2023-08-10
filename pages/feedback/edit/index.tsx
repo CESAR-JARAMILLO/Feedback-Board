@@ -12,6 +12,10 @@ interface Suggestion {
 }
 
 const EditPage = () => {
+  const [newTitle, setNewTitle] = useState<string>('');
+  const [newCategory, setNewCategory] = useState<string>('');
+  const [newDetail, setNewDetail] = useState<string>('');
+  const [newStatus, setNewStatus] = useState<string>('');
   const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
   const supabase = useSupabaseClient()
@@ -41,8 +45,19 @@ const EditPage = () => {
       }
     }
 
+    if (suggestion) {
+      setNewTitle(suggestion.title);
+      setNewCategory(suggestion.category);
+      setNewDetail(suggestion.detail);
+    }
+
     getSuggestion()
-  }, [])
+  }, [suggestion])
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value);
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => setNewCategory(e.target.value);
+  const handleDetailChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setNewDetail(e.target.value);
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => setNewDetail(e.target.value);
 
 
   return (
@@ -59,7 +74,8 @@ const EditPage = () => {
             color="#3A4374" 
             h="48px" 
             variant='filled' 
-            value={suggestion?.title}
+            value={newTitle}
+            onChange={handleTitleChange}
           />
         </Flex>
         
@@ -67,10 +83,11 @@ const EditPage = () => {
           <Text color="#3A4374" fontWeight="bold">Category</Text>
           <Text mt="4px" mb="16px" color="#647196">Choose a category for your feedback</Text>
           <Select 
-            value={suggestion?.category}
-            color="#3A4374" 
-            h="48px" 
-            variant='filled' 
+            value={newCategory}
+            color="#3A4374"
+            h="48px"
+            variant='filled'
+            onChange={handleCategoryChange} //
           >
             <option value='option1'>Option 1</option>
             <option value='option2'>Option 2</option>
@@ -85,7 +102,8 @@ const EditPage = () => {
             value='Planned'
             color="#3A4374" 
             h="48px" 
-            variant='filled' 
+            variant='filled'
+            onChange={handleStatusChange}
           >
             <option value='option1'>Option 1</option>
             <option value='option2'>Option 2</option>
@@ -97,10 +115,11 @@ const EditPage = () => {
           <Text color="#3A4374" fontWeight="bold">Feedback Detail</Text>
           <Text mt="4px" mb="16px" color="#647196">Include any specific comments on what should be improved, added, etc.</Text>
           <Textarea 
-            value={suggestion?.detail}
-            color="#3A4374" 
-            h="48px" 
-            variant='filled' 
+            value={newDetail}
+            color="#3A4374"
+            h="48px"
+            variant='filled'
+            onChange={handleDetailChange}
           />
         </Flex>
 
