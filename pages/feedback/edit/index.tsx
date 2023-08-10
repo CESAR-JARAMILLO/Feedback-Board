@@ -3,6 +3,7 @@ import { Box, Button, Flex, Image, Input, Select, Text, Textarea } from '@chakra
 import React, { useContext, useEffect, useState } from 'react'
 import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import Router, { useRouter } from 'next/router'
 
 interface Suggestion {
   id: string;
@@ -19,6 +20,7 @@ const EditPage = () => {
   const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
   const supabase = useSupabaseClient()
+  const router = useRouter()
 
   useEffect(() => {
     const getSuggestion = async () => {
@@ -26,38 +28,61 @@ const EditPage = () => {
         const { data, error } = await supabase
           .from('suggestions')
           .select()
-          .eq('id', selectedSuggestionId)
-    
+          .eq('id', selectedSuggestionId);
+  
         if (error) {
           console.error("An error occurred:", error);
           return;
         }
-    
+  
         // Handle Success
         if (data && data.length > 0) {
           setSuggestion(data[0]);
+          // Initialize the new state variables here
+          setNewTitle(data[0].title);
+          setNewCategory(data[0].category);
+          setNewDetail(data[0].detail);
         }
-
+  
       } catch (error) {
         console.error("Unexpected error:", error);
       } finally {
-        // Restet loading state
+        // Reset loading state
       }
-    }
-
-    if (suggestion) {
-      setNewTitle(suggestion.title);
-      setNewCategory(suggestion.category);
-      setNewDetail(suggestion.detail);
-    }
-
-    getSuggestion()
-  }, [suggestion])
+    };
+  
+    getSuggestion();
+  }, [selectedSuggestionId, supabase]);
+  
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value);
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => setNewCategory(e.target.value);
   const handleDetailChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setNewDetail(e.target.value);
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => setNewDetail(e.target.value);
+
+  const handleSubmit = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('suggestions')
+        .update({
+          title: newTitle,
+          category: newCategory,
+          detail: newDetail,
+        })
+        .eq('id', selectedSuggestionId)
+  
+      if (error) {
+        console.error("An error occurred:", error);
+        return;
+      } 
+      // Handle Success
+
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+      router.push('/')
+    }
+  }
 
 
   return (
@@ -89,9 +114,11 @@ const EditPage = () => {
             variant='filled'
             onChange={handleCategoryChange} //
           >
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
+            <option value='UI'>UI</option>
+            <option value='UX'>UX</option>
+            <option value='Enhancement'>Enhancement</option>
+            <option value='Bug'>Bug</option>
+            <option value='Feature'>Feature</option>
           </Select>
         </Flex>
         
@@ -105,9 +132,9 @@ const EditPage = () => {
             variant='filled'
             onChange={handleStatusChange}
           >
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
+            <option value='Planned'>Planned</option>
+            <option value='In-Progress'>In-Progress</option>
+            <option value='Live'>Live</option>
           </Select>
         </Flex>
         
@@ -124,7 +151,7 @@ const EditPage = () => {
         </Flex>
 
         <Flex direction="column" mt="40px" gap="16px">
-          <Button bg="#AD1FEA" color="#F2F4FE" borderRadius={10} >Save Changes</Button>
+          <Button onClick={handleSubmit} bg="#AD1FEA" color="#F2F4FE" borderRadius={10} >Save Changes</Button>
           <Button bg="#3A4374" color="#F2F4FE" borderRadius={10} >Cancel</Button>
           <Button bg="#D73737" color="#F2F4FE" borderRadius={10} >Delete</Button>
         </Flex>
