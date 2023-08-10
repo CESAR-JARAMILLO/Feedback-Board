@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Comment from './Comment'
 import { Flex, Text } from '@chakra-ui/react'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
 
 const Comments = () => {
   const [comments, setComments] = useState<any[] | null>(null)
   const supabase = useSupabaseClient()
+  const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
 
   useEffect(() => {
     const getComments = async () => {
@@ -13,6 +15,7 @@ const Comments = () => {
         const { data, error } = await supabase
           .from('comments')
           .select()
+          .eq('suggestion_id', selectedSuggestionId)
   
         if (error) {
           console.error("An error occurred:", error);
