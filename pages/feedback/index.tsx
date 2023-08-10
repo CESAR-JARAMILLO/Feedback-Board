@@ -4,6 +4,7 @@ import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 import { useContext, useEffect, useState } from 'react'
 import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import AddComment from '@/components/comments/AddComment'
 
 interface Suggestion {
   id: string;
@@ -49,7 +50,7 @@ const Feedback = () => {
   }, [])
 
   return (
-    <Box p="24px" h="100vh" bg="#F2F4FE">
+    <Box p="24px" minH="100vh" bg="#F2F4FE">
       <FeedbackHeader />
 
       <Flex mb="16px" fontSize="13px" p="24px" direction="column" bg="#FFF" borderRadius={10}>
@@ -88,6 +89,7 @@ const Feedback = () => {
           </Flex>
 
       <Comments />
+      <AddComment />
     </Box>
   )
 }
