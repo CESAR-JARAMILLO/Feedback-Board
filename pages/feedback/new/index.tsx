@@ -1,6 +1,6 @@
 import FeedbackHeader from '@/components/feedback/FeedbackHeader'
 import { Box, Button, Flex, Image, Input, Select, Text, Textarea } from '@chakra-ui/react'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
@@ -19,6 +19,7 @@ const NewFeedbackPage = () => {
   const [detail, setDetail] = useState('')
   const supabase = useSupabaseClient()
   const router = useRouter()
+  const user = useUser()
 
   useEffect(() => {
     setCategories(categoryList)
@@ -42,9 +43,9 @@ const NewFeedbackPage = () => {
     // Add loading state
     try {
       const { data, error } = await supabase
-        .from('feedback')
+        .from('suggestions')
         .upsert({
-          user_id: '9f2e320d-70f1-4621-9444-72b722b1a856',
+          user_id: user?.id,
           title: title,
           category: selectedCategory,
           detail: detail,

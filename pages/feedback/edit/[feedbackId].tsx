@@ -15,7 +15,7 @@ interface EditPageProps {
 export async function getServerSideProps(context: { params: { feedbackId: any; }; }) {
   const { feedbackId } = context.params;
   const { data, error } = await supabase
-    .from('feedback')
+    .from('suggestions')
     .select('*')
     .eq('id', feedbackId)
     .single();

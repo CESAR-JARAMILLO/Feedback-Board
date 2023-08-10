@@ -23,7 +23,7 @@ const Feedback = () => {
     const getSuggestion = async () => {
       try {
         const { data, error } = await supabase
-          .from('feedback')
+          .from('suggestions')
           .select()
           .eq('id', selectedSuggestionId)
     
@@ -86,7 +86,7 @@ const Feedback = () => {
               </Flex>
             </Flex>
           </Flex>
-          
+
       <Comments />
     </Box>
   )
