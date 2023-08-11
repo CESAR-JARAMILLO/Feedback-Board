@@ -1,11 +1,39 @@
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
-import React from 'react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import React, { useEffect, useState } from 'react'
 
 interface SuggestionProps{
   suggestion: any;
 }
 
 const Suggestion = ({ suggestion }: SuggestionProps) => {
+  const supabase =useSupabaseClient()
+  const [comments, setComments] = useState<any[]>()
+
+  useEffect(() => {
+    const getSuggestions = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('comments')
+          .select()
+          .eq('suggestion_id', suggestion.id)
+    
+        if (error) {
+          console.error("An error occurred:", error);
+          return;
+        }
+    
+        // Handle Success
+        setComments(data)
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      } finally {
+        // Restet loading state
+      }
+    }
+
+    getSuggestions()
+  }, [])
 
   return (
     <Flex mb="16px" fontSize="13px" p="24px" direction="column" bg="#FFF" borderRadius={10}>
@@ -38,7 +66,7 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
               </Button>
               <Flex alignItems="center" gap={2}>
                 <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-                <Text fontWeight="bold">2</Text>
+                <Text fontWeight="bold">{comments?.length}</Text>
               </Flex>
             </Flex>
           </Flex>
