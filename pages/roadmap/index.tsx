@@ -1,11 +1,40 @@
 import AddFeedbackBtn from '@/components/buttons/AddFeedbackBtn'
+import RoadmapSuggestion from '@/components/roadmap/RoadmapSuggestion'
+import EmptySuggestions from '@/components/suggestions/EmptySuggestions'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 import { Box, Button, Divider, Flex, Image, Text } from '@chakra-ui/react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const RoadmapPage = () => {
+  const [suggestions, setSuggestions] = useState<any[] | null>(null)
+  const supabase = useSupabaseClient()
   const router = useRouter()
+
+  useEffect(() => {
+    const getSuggestions = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('suggestions')
+          .select();
+    
+        if (error) {
+          console.error("An error occurred:", error);
+          return;
+        }
+    
+        // Handle Success
+        setSuggestions(data)
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      } finally {
+        // Restet loading state
+      }
+    }
+
+    getSuggestions()
+  }, [])
 
   return (
     <Box minH="100vh" bg="#F2F4FE">
@@ -39,193 +68,15 @@ const RoadmapPage = () => {
         <Text color="#647196" fontSize="13px">Features currently being developed</Text>
       </Box>
 
-      {/* Progress Card */}
-      <Box mb="16px" mx="24px">
-        <Box
-          height="8px"
-          bg="#AD1FEA"
-          borderTopLeftRadius={10}
-          borderTopRightRadius={10}
-        />
-        <Flex 
-          fontSize="13px"
-          p="24px"
-          direction="column"
-          bg="#FFF"
-          borderBottomLeftRadius={10}
-          borderBottomRightRadius={10}
-        >
-          <Flex mb="16px">
-            <Box 
-              my="auto" 
-              h="8px" 
-              w="8px" 
-              bg="#AD1FEA"
-              borderRadius="50%" 
-              mr="16px" 
-            />
-            <Text color="#647196">In Progress</Text>
-          </Flex>
-          <Box mb="8px">
-            <Text mb="9px" fontWeight="bold">Add tags for solutions</Text>
-            <Text color="#647196">Easier to search for solutions based on a specific stack.</Text>
+      {suggestions && suggestions.length > 0 ? (
+        suggestions.map((suggestion, index) => (
+          <Box key={index}>
+            <RoadmapSuggestion suggestion={suggestion} />
           </Box>
-          <Button
-            w="50%"
-            fontSize="13px"
-            fontWeight="semibold" 
-            borderRadius="10px" 
-            bg="#F2F4FF"
-            color="#4661E6"
-            mb="16px"
-          >
-            Enhancement
-          </Button>
-          <Flex justify="space-between">
-            <Button
-              w="25%"
-              fontSize="13px"
-              fontWeight="semibold" 
-              borderRadius="10px" 
-              bg="#F2F4FF"
-              color="#3A4374"
-            >
-              <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-              112
-            </Button>
-            <Flex alignItems="center" gap={2}>
-              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-              <Text fontWeight="bold">2</Text>
-            </Flex>
-          </Flex>
-        </Flex>
-      </Box>
-      
-      {/* Progress Card */}
-      <Box mb="16px" mx="24px">
-        <Box
-          height="8px"
-          bg="#AD1FEA"
-          borderTopLeftRadius={10}
-          borderTopRightRadius={10}
-        />
-        <Flex 
-          fontSize="13px"
-          p="24px"
-          direction="column"
-          bg="#FFF"
-          borderBottomLeftRadius={10}
-          borderBottomRightRadius={10}
-        >
-          <Flex mb="16px">
-            <Box 
-              my="auto" 
-              h="8px" 
-              w="8px" 
-              bg="#AD1FEA"
-              borderRadius="50%" 
-              mr="16px" 
-            />
-            <Text color="#647196">In Progress</Text>
-          </Flex>
-          <Box mb="8px">
-            <Text mb="9px" fontWeight="bold">Add tags for solutions</Text>
-            <Text color="#647196">Easier to search for solutions based on a specific stack.</Text>
-          </Box>
-          <Button
-            w="50%"
-            // onClick={onClick} 
-            fontSize="13px"
-            fontWeight="semibold" 
-            borderRadius="10px" 
-            bg="#F2F4FF"
-            color="#4661E6"
-            mb="16px"
-          >
-            Enhancement
-          </Button>
-          <Flex justify="space-between">
-            <Button
-              w="25%"
-              fontSize="13px"
-              fontWeight="semibold" 
-              borderRadius="10px" 
-              bg="#F2F4FF"
-              color="#3A4374"
-            >
-              <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-              112
-            </Button>
-            <Flex alignItems="center" gap={2}>
-              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-              <Text fontWeight="bold">2</Text>
-            </Flex>
-          </Flex>
-        </Flex>
-      </Box>
-      
-      {/* Progress Card */}
-      <Box mb="16px" mx="24px">
-        <Box
-          height="8px"
-          bg="#AD1FEA"
-          borderTopLeftRadius={10}
-          borderTopRightRadius={10}
-        />
-        <Flex 
-          fontSize="13px"
-          p="24px"
-          direction="column"
-          bg="#FFF"
-          borderBottomLeftRadius={10}
-          borderBottomRightRadius={10}
-        >
-          <Flex mb="16px">
-            <Box 
-              my="auto" 
-              h="8px" 
-              w="8px" 
-              bg="#AD1FEA"
-              borderRadius="50%" 
-              mr="16px" 
-            />
-            <Text color="#647196">In Progress</Text>
-          </Flex>
-          <Box mb="8px">
-            <Text mb="9px" fontWeight="bold">Add tags for solutions</Text>
-            <Text color="#647196">Easier to search for solutions based on a specific stack.</Text>
-          </Box>
-          <Button
-            w="50%"
-            // onClick={onClick} 
-            fontSize="13px"
-            fontWeight="semibold" 
-            borderRadius="10px" 
-            bg="#F2F4FF"
-            color="#4661E6"
-            mb="16px"
-          >
-            Enhancement
-          </Button>
-          <Flex justify="space-between">
-            <Button
-              w="25%"
-              fontSize="13px"
-              fontWeight="semibold" 
-              borderRadius="10px" 
-              bg="#F2F4FF"
-              color="#3A4374"
-            >
-              <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-              112
-            </Button>
-            <Flex alignItems="center" gap={2}>
-              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-              <Text fontWeight="bold">2</Text>
-            </Flex>
-          </Flex>
-        </Flex>
-      </Box>
+        ))
+      ): (
+        <EmptySuggestions />
+      )}
 
     </Box>
   )
