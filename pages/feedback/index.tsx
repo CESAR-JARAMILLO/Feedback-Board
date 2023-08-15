@@ -3,7 +3,7 @@ import FeedbackHeader from '@/components/feedback/FeedbackHeader'
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 import { useContext, useEffect, useState } from 'react'
 import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import AddComment from '@/components/comments/AddComment'
 
 interface Suggestion {
@@ -15,10 +15,11 @@ interface Suggestion {
 
 const Feedback = () => {
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
+  const [upvotes, setUpvotes] = useState<any[]>()
   const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
   const supabase =useSupabaseClient()
+  const user = useUser()
   
-  console.log(selectedSuggestionId)
 
   useEffect(() => {
     const getSuggestion = async () => {
@@ -46,8 +47,83 @@ const Feedback = () => {
       }
     }
 
+    const getUpvotes = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('upvotes')
+          .select()
+          .eq('suggestion_id', selectedSuggestionId)
+    
+        if (error) {
+          console.error("An error occurred:", error);
+          return;
+        }
+    
+        // Handle Success
+        setUpvotes(data)
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      } finally {
+        // Restet loading state
+      }
+    }
+
+    getUpvotes()
     getSuggestion()
-  }, [])
+  }, [upvotes])
+
+  const addUpvote = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('upvotes')
+        .insert({
+          user_id: user?.id,
+          suggestion_id: selectedSuggestionId
+        })
+  
+      if (error) {
+        console.error("An error occurred:", error);
+        return;
+      }
+  
+      // Handle Success
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+      // Restet loading state
+    }
+  }
+  
+  const deleteUpvote = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('upvotes')
+        .delete()
+        .eq('user_id', user?.id)
+        .eq('suggestion_id', selectedSuggestionId)
+  
+      if (error) {
+        console.error("An error occurred:", error);
+        return;
+      }
+  
+      // Handle Success
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+      // Restet loading state
+    }
+  }
+
+  const handleUpvoteClick = () => {
+    const hasCommented = upvotes?.some(upvotes => upvotes.user_id === user?.id);
+    if (!hasCommented) {
+      addUpvote()
+    } else {
+      deleteUpvote()
+    }
+  }
+
 
   return (
     <Box p="24px" minH="100vh" bg="#F2F4FE">
@@ -71,6 +147,7 @@ const Feedback = () => {
             </Button>
             <Flex justify="space-between">
               <Button
+              onClick={handleUpvoteClick}
                 w="25%"
                 fontSize="13px"
                 fontWeight="semibold" 
@@ -79,7 +156,7 @@ const Feedback = () => {
                 color="#3A4374"
               >
                 <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-                112
+                {upvotes?.length}
               </Button>
               <Flex alignItems="center" gap={2}>
                 <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
