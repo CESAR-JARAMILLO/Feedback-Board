@@ -9,6 +9,7 @@ interface SuggestionProps{
 const Suggestion = ({ suggestion }: SuggestionProps) => {
   const supabase =useSupabaseClient()
   const [comments, setComments] = useState<any[]>()
+  const [upvotes, setUpvotes] = useState<any[]>()
 
   useEffect(() => {
     const getSuggestions = async () => {
@@ -31,8 +32,30 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
         // Restet loading state
       }
     }
+    
+    const getUpvotes = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('upvotes')
+          .select()
+          .eq('suggestion_id', suggestion.id)
+    
+        if (error) {
+          console.error("An error occurred:", error);
+          return;
+        }
+    
+        // Handle Success
+        setUpvotes(data)
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      } finally {
+        // Restet loading state
+      }
+    }
 
     getSuggestions()
+    getUpvotes()
   }, [])
 
   return (
@@ -62,7 +85,7 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
                 color="#3A4374"
               >
                 <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-                112
+                {upvotes?.length}
               </Button>
               <Flex alignItems="center" gap={2}>
                 <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
