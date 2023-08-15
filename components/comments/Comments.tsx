@@ -32,7 +32,7 @@ const Comments = () => {
     };
   
     getComments();
-  }, []);
+  }, [comments]);
 
   return (
     <Flex direction="column" bg="#FFF" mt="24px" borderRadius={10}>
