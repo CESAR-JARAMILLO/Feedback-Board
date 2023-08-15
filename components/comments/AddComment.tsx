@@ -47,6 +47,7 @@ const AddComment = () => {
         
       <Flex fontSize="13px" direction="column">
         <Textarea
+            value={comment}
             onChange={handleCommentChange}
             placeholder='Type your comment here'
             color="#3A4374" 
