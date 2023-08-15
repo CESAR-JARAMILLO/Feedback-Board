@@ -152,7 +152,7 @@ const EditPage = () => {
 
         <Flex direction="column" mt="40px" gap="16px">
           <Button onClick={handleSubmit} bg="#AD1FEA" color="#F2F4FE" borderRadius={10} >Save Changes</Button>
-          <Button bg="#3A4374" color="#F2F4FE" borderRadius={10} >Cancel</Button>
+          <Button onClick={() => router.push('/')} bg="#3A4374" color="#F2F4FE" borderRadius={10} >Cancel</Button>
           <Button bg="#D73737" color="#F2F4FE" borderRadius={10} >Delete</Button>
         </Flex>
       </Flex>
