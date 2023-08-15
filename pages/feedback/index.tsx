@@ -16,6 +16,7 @@ interface Suggestion {
 const Feedback = () => {
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
   const [upvotes, setUpvotes] = useState<any[]>()
+  const [comments, setComments] = useState<any[]>()
   const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
   const supabase =useSupabaseClient()
   const user = useUser()
@@ -47,6 +48,27 @@ const Feedback = () => {
       }
     }
 
+    const getComments = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('comments')
+          .select()
+          .eq('suggestion_id', selectedSuggestionId)
+    
+        if (error) {
+          console.error("An error occurred:", error);
+          return;
+        }
+    
+        // Handle Success
+        setComments(data)
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      } finally {
+        // Restet loading state
+      }
+    }
+
     const getUpvotes = async () => {
       try {
         const { data, error } = await supabase
@@ -68,9 +90,10 @@ const Feedback = () => {
       }
     }
 
+    getComments()
     getUpvotes()
     getSuggestion()
-  }, [upvotes])
+  }, [upvotes, comments])
 
   const addUpvote = async () => {
     try {
@@ -160,7 +183,7 @@ const Feedback = () => {
               </Button>
               <Flex alignItems="center" gap={2}>
                 <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-                <Text fontWeight="bold">2</Text>
+                <Text fontWeight="bold">{comments?.length}</Text>
               </Flex>
             </Flex>
           </Flex>
