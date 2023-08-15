@@ -12,7 +12,7 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
   const [upvotes, setUpvotes] = useState<any[]>()
 
   useEffect(() => {
-    const getSuggestions = async () => {
+    const getComments = async () => {
       try {
         const { data, error } = await supabase
           .from('comments')
@@ -54,7 +54,7 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
       }
     }
 
-    getSuggestions()
+    getComments()
     getUpvotes()
   }, [])
 
