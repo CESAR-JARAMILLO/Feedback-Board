@@ -1,6 +1,6 @@
 import Comments from '@/components/comments/Comments'
 import FeedbackHeader from '@/components/feedback/FeedbackHeader'
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react'
 import { useContext, useEffect, useState } from 'react'
 import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
@@ -20,6 +20,7 @@ const Feedback = () => {
   const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
   const supabase =useSupabaseClient()
   const user = useUser()
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
   
 
   useEffect(() => {
@@ -152,40 +153,64 @@ const Feedback = () => {
     <Box p="24px" minH="100vh" bg="#F2F4FE">
       <FeedbackHeader />
 
-      <Flex mb="16px" fontSize="13px" p="24px" direction="column" bg="#FFF" borderRadius={10}>
-            <Box mb="8px">
-              <Text mb="9px" fontWeight="bold">{suggestion?.title}</Text>
-              <Text color="#647196">{suggestion?.detail}</Text>
-            </Box>
-            <Button
-              maxW="fit-content"
-              fontSize="13px"
-              fontWeight="semibold" 
-              borderRadius="10px" 
-              bg="#F2F4FF"
-              color="#4661E6"
-              mb="16px"
-            >
-              {suggestion?.category}
-            </Button>
-            <Flex justify="space-between">
-              <Button
-              onClick={handleUpvoteClick}
-                w="25%"
-                fontSize="13px"
-                fontWeight="semibold" 
-                borderRadius="10px" 
-                bg="#F2F4FF"
-                color="#3A4374"
-              >
-                <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-                {upvotes?.length}
-              </Button>
-              <Flex alignItems="center" gap={2}>
-                <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-                <Text fontWeight="bold">{comments?.length}</Text>
+      <Flex gap={isLargerThanMD ? 10 : "none"} fontSize="13px" p={!isLargerThanMD ? "24px": "none"} px={isLargerThanMD ? "32px" : "none"} py={isLargerThanMD ? "28px" : "none"} direction={isLargerThanMD ? "row" : "column"} bg="#FFF" borderRadius={10}>
+      {isLargerThanMD && (
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          direction="column"
+          w="40px"
+          h="54px"
+          fontSize="13px"
+          fontWeight="semibold" 
+          borderRadius="10px" 
+          bg="#F2F4FF"
+          color="#3A4374"
+          >
+        <Image h="8px" src="/images/shared/icon-arrow-up.svg"/>
+        {upvotes?.length}
+        </Flex> 
+      )}
+      <Box w={isLargerThanMD ? "625px" : "none"}>
+        <Text fontSize={isLargerThanMD ? "18px" : "none"} mb="9px" fontWeight="bold">{suggestion?.title}</Text>
+        <Text fontSize={isLargerThanMD ? "16px" : "none"} mb="12px" color="#647196">{suggestion?.detail}</Text>
+        <Button
+          maxW="fit-content"
+          fontSize="13px"
+          fontWeight="semibold" 
+          borderRadius="10px" 
+          bg="#F2F4FF"
+          color="#4661E6" 
+        >
+          {suggestion?.category}
+        </Button>
+      </Box>          
+            
+            {!isLargerThanMD && (
+              <Flex mt="16px"  justify="space-between">
+                <Button
+                  w="25%"
+                  fontSize="13px"
+                  fontWeight="semibold" 
+                  borderRadius="10px" 
+                  bg="#F2F4FF"
+                  color="#3A4374"
+                >
+                  <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
+                  {upvotes?.length}
+                </Button>
+                <Flex alignItems="center" gap={2}>
+                  <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
+                  <Text fontWeight="bold">{comments?.length}</Text>
+                </Flex>
               </Flex>
+            )}
+            {isLargerThanMD && (
+              <Flex alignItems="center" gap={2}>
+              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
+              <Text fontWeight="bold">{comments?.length}</Text>
             </Flex>
+            )}
           </Flex>
 
       <Comments />
