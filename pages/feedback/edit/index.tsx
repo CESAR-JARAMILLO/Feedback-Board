@@ -58,7 +58,7 @@ const EditPage = () => {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value);
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => setNewCategory(e.target.value);
   const handleDetailChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setNewDetail(e.target.value);
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => setNewDetail(e.target.value);
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => setNewStatus(e.target.value);
 
   const handleSubmit = async () => {
     try {
@@ -68,6 +68,7 @@ const EditPage = () => {
           title: newTitle,
           category: newCategory,
           detail: newDetail,
+          status: newStatus,
         })
         .eq('id', selectedSuggestionId)
   
@@ -126,7 +127,7 @@ const EditPage = () => {
           <Text color="#3A4374" fontWeight="bold">Update Status</Text>
           <Text mt="4px" mb="16px" color="#647196">Change feature state</Text>
           <Select 
-            value='Planned'
+            value={newStatus}
             color="#3A4374" 
             h="48px" 
             variant='filled'
