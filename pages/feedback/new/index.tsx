@@ -1,5 +1,5 @@
 import FeedbackHeader from '@/components/feedback/FeedbackHeader'
-import { Box, Button, Flex, Image, Input, Select, Text, Textarea } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Input, Select, Text, Textarea, useMediaQuery } from '@chakra-ui/react'
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -20,6 +20,7 @@ const NewFeedbackPage = () => {
   const supabase = useSupabaseClient()
   const router = useRouter()
   const user = useUser()
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     setCategories(categoryList)
@@ -68,7 +69,7 @@ const NewFeedbackPage = () => {
   };
 
   return (
-    <Box h="100vh" p="24px" bg="#F2F4FE">
+    <Box h="100vh" p="24px" bg="#F2F4FE" px={isLargerThanMD ? "114px" : "none"}>
       <FeedbackHeader />
       <Flex direction="column" bg="#FFF" borderRadius={10} p="24px" position="relative">
         <Image position="absolute" top="-20px" h="40px" w="40px" src="/images/shared/icon-new-feedback.svg" />

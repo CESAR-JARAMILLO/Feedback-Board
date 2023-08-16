@@ -1,11 +1,13 @@
-import { Button, Flex, Image, Text } from '@chakra-ui/react'
+import { Button, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 
 const FeedbackHeader = () => {
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
+
   const router = useRouter()
   return (
-    <Flex mb="24px" fontSize="13px" justifyContent="space-between">
+    <Flex mt={isLargerThanMD ? "32px" : "none"} mb="24px" fontSize="13px" justifyContent="space-between">
       <Flex as="button" onClick={() => router.push("/")} gap={2} alignItems="center">
         <Image h={3} src="/images/shared/icon-arrow-left.svg" />
         <Text fontWeight="bold">Go Back</Text>

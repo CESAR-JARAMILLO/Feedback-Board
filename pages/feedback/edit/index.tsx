@@ -1,5 +1,5 @@
 import FeedbackHeader from '@/components/feedback/FeedbackHeader'
-import { Box, Button, Flex, Image, Input, Select, Text, Textarea } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Input, Select, Text, Textarea, useMediaQuery } from '@chakra-ui/react'
 import React, { useContext, useEffect, useState } from 'react'
 import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionContext'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
@@ -21,6 +21,7 @@ const EditPage = () => {
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
   const supabase = useSupabaseClient()
   const router = useRouter()
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     const getSuggestion = async () => {
@@ -87,7 +88,7 @@ const EditPage = () => {
 
 
   return (
-    <Box p="24px" bg="#F2F4FE">
+    <Box p="24px" bg="#F2F4FE" px={isLargerThanMD ? "114px" : "none"}>
       <FeedbackHeader />
       <Flex direction="column" bg="#FFF" borderRadius={10} p="24px" position="relative">
         <Image position="absolute" top="-20px" h="40px" w="40px" src="/images/shared/icon-edit-feedback.svg" />
