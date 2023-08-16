@@ -58,68 +58,83 @@ const RoadmapSuggestion = ({ suggestion }: RoadmapSuggestionProps) => {
     getUpvotes()
   }, [])
 
+  let statusColor;
+  switch (suggestion.status) {
+    case 'Planned':
+      statusColor = '#F49F85';
+      break;
+    case 'In-Progress':
+      statusColor = '#AD1FEA';
+      break;
+    case 'Live':
+      statusColor = '#62BCFA';
+      break;
+    default:
+      statusColor = '#AD1FEA'; // Default color
+  }
+
 
   return (
     <Box mb="16px" mx="24px">
-        <Box
-          height="8px"
-          bg="#AD1FEA"
-          borderTopLeftRadius={10}
-          borderTopRightRadius={10}
-        />
-        <Flex 
+      <Box
+        height="8px"
+        bg={statusColor}
+        borderTopLeftRadius={10}
+        borderTopRightRadius={10}
+      />
+      <Flex 
+        fontSize="13px"
+        p="24px"
+        direction="column"
+        bg="#FFF"
+        borderBottomLeftRadius={10}
+        borderBottomRightRadius={10}
+      >
+        <Flex mb="16px">
+          <Box 
+            my="auto" 
+            h="8px" 
+            w="8px" 
+            bg={statusColor}
+            borderRadius="50%" 
+            mr="16px" 
+          />
+          <Text color="#647196">{suggestion.status}</Text>
+        </Flex>
+        <Box mb="8px">
+          <Text mb="9px" fontWeight="bold">{suggestion.title}</Text>
+          <Text color="#647196">{suggestion.detail}</Text>
+        </Box>
+        <Button
+          w="50%"
           fontSize="13px"
-          p="24px"
-          direction="column"
-          bg="#FFF"
-          borderBottomLeftRadius={10}
-          borderBottomRightRadius={10}
+          fontWeight="semibold" 
+          borderRadius="10px" 
+          bg="#F2F4FF"
+          color="#4661E6"
+          mb="16px"
         >
-          <Flex mb="16px">
-            <Box 
-              my="auto" 
-              h="8px" 
-              w="8px" 
-              bg="#AD1FEA"
-              borderRadius="50%" 
-              mr="16px" 
-            />
-            <Text color="#647196">{suggestion.status}</Text>
-          </Flex>
-          <Box mb="8px">
-            <Text mb="9px" fontWeight="bold">{suggestion.title}</Text>
-            <Text color="#647196">{suggestion.detail}</Text>
-          </Box>
+          {suggestion.category}
+        </Button>
+        <Flex justify="space-between">
           <Button
-            w="50%"
+            w="25%"
             fontSize="13px"
             fontWeight="semibold" 
             borderRadius="10px" 
             bg="#F2F4FF"
-            color="#4661E6"
-            mb="16px"
+            color="#3A4374"
           >
-            {suggestion.category}
+            <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
+            {upvotes?.length}
           </Button>
-          <Flex justify="space-between">
-            <Button
-              w="25%"
-              fontSize="13px"
-              fontWeight="semibold" 
-              borderRadius="10px" 
-              bg="#F2F4FF"
-              color="#3A4374"
-            >
-              <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-              {upvotes?.length}
-            </Button>
-            <Flex alignItems="center" gap={2}>
-              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-              <Text fontWeight="bold">{comments?.length}</Text>
-            </Flex>
+          <Flex alignItems="center" gap={2}>
+            <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
+            <Text fontWeight="bold">{comments?.length}</Text>
           </Flex>
         </Flex>
-      </Box>
+      </Flex>
+    </Box>
   )
 }
 
