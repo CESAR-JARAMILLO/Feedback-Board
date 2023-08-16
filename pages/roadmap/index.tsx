@@ -8,6 +8,9 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 const RoadmapPage = () => {
+  const [numberPlanned, setNumberPlanned] = useState(0)
+  const [numberInProgress, setNumberInProgress] = useState(0)
+  const [numberLive, setNumberLive] = useState(0)
   const [suggestions, setSuggestions] = useState<any[] | null>(null)
   const supabase = useSupabaseClient()
   const router = useRouter()
@@ -18,24 +21,35 @@ const RoadmapPage = () => {
         const { data, error } = await supabase
           .from('suggestions')
           .select();
-    
+  
         if (error) {
           console.error("An error occurred:", error);
           return;
         }
-    
+  
         // Handle Success
-        setSuggestions(data)
+        setSuggestions(data);
+  
+        // Count the number of each status
+        const statusCounts = data.reduce((counts, suggestion) => {
+          counts[suggestion.status] = (counts[suggestion.status] || 0) + 1;
+          return counts;
+        }, {} as Record<string, number>);
+  
+        setNumberPlanned(statusCounts['Planned'] || 0);
+        setNumberInProgress(statusCounts['In-Progress'] || 0);
+        setNumberLive(statusCounts['Live'] || 0);
+  
       } catch (error) {
         console.error("Unexpected error:", error);
       } finally {
-        // Restet loading state
+        // Reset loading state
       }
-    }
-
-    getSuggestions()
-  }, [])
-
+    };
+  
+    getSuggestions();
+  }, []);
+  
   return (
     <Box minH="100vh" bg="#F2F4FE">
       <Flex py="26px" px="24px" bg="#373F68" color="#FFF" fontSize="13px" justifyContent="space-between" alignItems="center">
@@ -51,14 +65,14 @@ const RoadmapPage = () => {
 
       <Flex fontSize="13px" fontWeight="bold" borderBottom="1px solid #8C92B3" h="60px" w="100%">
         <Flex flexGrow={1} alignItems="center" justifyContent="center">
-          <Text color="#979797">Planned (2)</Text>
+          <Text color="#979797">Planned ({numberPlanned})</Text>
         </Flex>
         <Flex pos="relative" direction="column" flexGrow={1} alignItems="center" justifyContent="center">
-          <Text color="#3A4374">Planned (2)</Text>
-          <Divider pos="absolute"  bottom="-1px" border="4px solid #AD1FEA" />
+          <Text color="#3A4374">In-Progress ({numberInProgress})</Text>
+          <Divider pos="absolute" bottom="-1px" border="4px solid #AD1FEA" />
         </Flex>
         <Flex flexGrow={1} alignItems="center" justifyContent="center">
-          <Text color="#979797">Planned (2)</Text>
+          <Text color="#979797">Live ({numberLive})</Text>
         </Flex>
       </Flex>
 
