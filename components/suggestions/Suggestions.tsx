@@ -1,6 +1,6 @@
 import{ useEffect, useState, useContext } from 'react'
 import Suggestion from './Suggestion'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, useMediaQuery } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import EmptySuggestions from './EmptySuggestions'
@@ -9,6 +9,7 @@ import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionC
 const Suggestions = () => {
   const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
   const [suggestions, setSuggestions] = useState<any[] | null>(null)
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
   const supabase = useSupabaseClient()
   const router = useRouter()
 
@@ -43,7 +44,7 @@ const Suggestions = () => {
   };
 
   return (
-    <Flex minH="90vh" gap="16px" direction="column" mx="24px" mt="32px" >
+    <Flex minH="90vh" gap="16px" direction="column" mx={isLargerThanMD ? "none" : "24px"} mt="32px" >
       {suggestions && suggestions.length > 0 ? (
         suggestions.map((suggestion, index) => (
           <Box onClick={handleClick(suggestion.id)} key={index}>

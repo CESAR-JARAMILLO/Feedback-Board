@@ -16,7 +16,7 @@ const Home = () => {
     setHamburgerClicked(!hamburgerClicked);
   }
   return (
-    <Box pt={isLargerThanMD ? "56px" : "none" } bg="#F2F4FE" pos="relative">
+    <Box px={isLargerThanMD ? "40px" : "none" } pt={isLargerThanMD ? "56px" : "none" } bg="#F2F4FE" pos="relative">
       {isLargerThanMD ? (
         <Board />
       ) : (  
