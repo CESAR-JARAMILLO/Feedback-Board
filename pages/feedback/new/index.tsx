@@ -50,6 +50,7 @@ const NewFeedbackPage = () => {
           title: title,
           category: selectedCategory,
           detail: detail,
+          status: "Planned"
         });
   
       if (error) {
