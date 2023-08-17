@@ -1,15 +1,17 @@
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react'
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import React, { useEffect, useState } from 'react'
 
 interface RoadmapSuggestionProps{
   suggestion: any;
+  minH: string;
 }
 
-const RoadmapSuggestion = ({ suggestion }: RoadmapSuggestionProps) => {
+const RoadmapSuggestion = ({ suggestion, minH }: RoadmapSuggestionProps) => {
   const [upvotes, setUpvotes] = useState<any[]>()
   const [comments, setComments] = useState<any[]>()
   const supabase =useSupabaseClient()
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     const getComments = async () => {
@@ -75,7 +77,7 @@ const RoadmapSuggestion = ({ suggestion }: RoadmapSuggestionProps) => {
 
 
   return (
-    <Box mb="16px" mx="24px">
+    <Box mb={isLargerThanMD ? "10px" : "16px"} mx={isLargerThanMD ? "none" : "24px"}>
       <Box
         height="8px"
         bg={statusColor}
@@ -83,6 +85,8 @@ const RoadmapSuggestion = ({ suggestion }: RoadmapSuggestionProps) => {
         borderTopRightRadius={10}
       />
       <Flex 
+        pos="relative"
+        minH={minH}
         fontSize="13px"
         p="24px"
         direction="column"
@@ -105,34 +109,36 @@ const RoadmapSuggestion = ({ suggestion }: RoadmapSuggestionProps) => {
           <Text mb="9px" fontWeight="bold">{suggestion.title}</Text>
           <Text color="#647196">{suggestion.detail}</Text>
         </Box>
-        <Button
-          w="50%"
-          fontSize="13px"
-          fontWeight="semibold" 
-          borderRadius="10px" 
-          bg="#F2F4FF"
-          color="#4661E6"
-          mb="16px"
-        >
-          {suggestion.category}
-        </Button>
-        <Flex justify="space-between">
+        <Box w={isLargerThanMD ? "80%" : "none"} mt="12px" pos={isLargerThanMD ? "absolute" : "relative"} bottom="10px">
           <Button
-            w="25%"
+            w="50%"
             fontSize="13px"
             fontWeight="semibold" 
             borderRadius="10px" 
             bg="#F2F4FF"
-            color="#3A4374"
+            color="#4661E6"
+            mb="16px"
           >
-            <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
-            {upvotes?.length}
+            {suggestion.category}
           </Button>
-          <Flex alignItems="center" gap={2}>
-            <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
-            <Text fontWeight="bold">{comments?.length}</Text>
+          <Flex justify="space-between">
+            <Button
+              w="25%"
+              fontSize="13px"
+              fontWeight="semibold" 
+              borderRadius="10px" 
+              bg="#F2F4FF"
+              color="#3A4374"
+            >
+              <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
+              {upvotes?.length}
+            </Button>
+            <Flex alignItems="center" gap={2}>
+              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
+              <Text fontWeight="bold">{comments?.length}</Text>
+            </Flex>
           </Flex>
-        </Flex>
+        </Box>
       </Flex>
     </Box>
   )
