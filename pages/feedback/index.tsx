@@ -150,10 +150,10 @@ const Feedback = () => {
 
 
   return (
-    <Box p="24px" minH="100vh" bg="#F2F4FE">
+    <Box p="24px" px={{ xl: "350px", lg: "160px", md: "40px" }} minH="100vh" bg="#F2F4FE">
       <FeedbackHeader />
 
-      <Flex gap={isLargerThanMD ? 10 : "none"} fontSize="13px" p={!isLargerThanMD ? "24px": "none"} px={isLargerThanMD ? "32px" : "none"} py={isLargerThanMD ? "28px" : "none"} direction={isLargerThanMD ? "row" : "column"} bg="#FFF" borderRadius={10}>
+      <Flex gap={{md: 10}} fontSize="13px" p="24px"  px={{md: "32px"}} py={{md: "28px"}} direction={{md: "row"}} bg="#FFF" borderRadius={10}>
       {isLargerThanMD && (
         <Flex
           justifyContent="center"
@@ -171,9 +171,9 @@ const Feedback = () => {
         {upvotes?.length}
         </Flex> 
       )}
-      <Box w={isLargerThanMD ? "625px" : "none"}>
-        <Text fontSize={isLargerThanMD ? "18px" : "none"} mb="9px" fontWeight="bold">{suggestion?.title}</Text>
-        <Text fontSize={isLargerThanMD ? "16px" : "none"} mb="12px" color="#647196">{suggestion?.detail}</Text>
+      <Box w={{md: "625px"}}>
+        <Text fontSize={{md: "18px"}} mb="9px" fontWeight="bold">{suggestion?.title}</Text>
+        <Text fontSize={{md: "16px"}} mb="12px" color="#647196">{suggestion?.detail}</Text>
         <Button
           maxW="fit-content"
           fontSize="13px"
