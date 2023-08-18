@@ -58,7 +58,7 @@ const RoadmapSuggestion = ({ suggestion, minH }: RoadmapSuggestionProps) => {
 
     getComments()
     getUpvotes()
-  }, [])
+  }, [suggestion.id, supabase])
 
   let statusColor;
   switch (suggestion.status) {
@@ -130,11 +130,11 @@ const RoadmapSuggestion = ({ suggestion, minH }: RoadmapSuggestionProps) => {
               bg="#F2F4FF"
               color="#3A4374"
             >
-              <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
+              <Image alt='icon arrow up' mr={2} src="/images/shared/icon-arrow-up.svg"/>
               {upvotes?.length}
             </Button>
             <Flex alignItems="center" gap={2}>
-              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
+              <Image alt='comments icon' w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
               <Text fontWeight="bold">{comments?.length}</Text>
             </Flex>
           </Flex>

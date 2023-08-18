@@ -90,7 +90,7 @@ const EditPage = () => {
     <Box p="24px" bg="#F2F4FE" px={{ xl: "350px", lg: "200px", md: "114px" }}>
       <FeedbackHeader />
       <Flex direction="column" bg="#FFF" borderRadius={10} p="24px" position="relative">
-        <Image position="absolute" top="-20px" h="40px" w="40px" src="/images/shared/icon-edit-feedback.svg" />
+        <Image alt="edit icon" position="absolute" top="-20px" h="40px" w="40px" src="/images/shared/icon-edit-feedback.svg" />
         <Text my="24px" fontSize="18px" fontWeight="bold" color="#3A4374">Editing {suggestion?.title}</Text>
 
         <Flex fontSize="13px" direction="column">

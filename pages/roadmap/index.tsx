@@ -50,7 +50,7 @@ const RoadmapPage = () => {
     };
   
     getSuggestions();
-  }, []);
+  }, [supabase]);
 
   const handleStatusSelection = (status: 'Planned' | 'In-Progress' | 'Live') => {
     setSelectedStatus(status);

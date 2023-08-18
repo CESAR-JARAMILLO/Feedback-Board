@@ -36,7 +36,7 @@ const Suggestions = () => {
     }
 
     getSuggestions()
-  }, [])
+  }, [router, supabase])
 
   const handleClick = (id: string) => () => {
     setSelectedSuggestionId(id);

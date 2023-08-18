@@ -11,7 +11,7 @@ const FilterHeader = () => {
       <Flex gap={8}>
         {isLargerThanMD && (  
           <Flex gap={3} alignItems="center">
-            <Image src='/images/suggestions/icon-suggestions.svg' />
+            <Image alt='suggestion icon' src='/images/suggestions/icon-suggestions.svg' />
             <Text color="#F2F4FE" fontWeight="bold" fontSize="18px" >2 Suggestions</Text>
           </Flex>
         )}

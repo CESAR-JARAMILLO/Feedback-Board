@@ -9,7 +9,7 @@ const FeedbackHeader = () => {
   return (
     <Flex mt={isLargerThanMD ? "32px" : "none"} mb="24px" fontSize="13px" justifyContent="space-between">
       <Flex as="button" onClick={() => router.push("/")} gap={2} alignItems="center">
-        <Image h={3} src="/images/shared/icon-arrow-left.svg" />
+        <Image alt='icon arrow left' h={3} src="/images/shared/icon-arrow-left.svg" />
         <Text fontWeight="bold">Go Back</Text>
       </Flex>
       {/* Add logic to handle feedback data pushed to edit page */}

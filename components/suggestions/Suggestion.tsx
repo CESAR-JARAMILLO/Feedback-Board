@@ -57,7 +57,7 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
 
     getComments()
     getUpvotes()
-  }, [])
+  }, [suggestion.id, supabase])
 
   return (
     <Flex gap={isLargerThanMD ? 10 : "none"} fontSize="13px" p={!isLargerThanMD ? "24px": "none"} px={isLargerThanMD ? "32px" : "none"} py={isLargerThanMD ? "28px" : "none"} direction={isLargerThanMD ? "row" : "column"} bg="#FFF" borderRadius={10}>
@@ -74,7 +74,7 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
           bg="#F2F4FF"
           color="#3A4374"
           >
-        <Image h="8px" src="/images/shared/icon-arrow-up.svg"/>
+        <Image alt='icon arrow up' h="8px" src="/images/shared/icon-arrow-up.svg"/>
         {upvotes?.length}
         </Flex> 
       )}
@@ -103,18 +103,18 @@ const Suggestion = ({ suggestion }: SuggestionProps) => {
                   bg="#F2F4FF"
                   color="#3A4374"
                 >
-                  <Image mr={2} src="/images/shared/icon-arrow-up.svg"/>
+                  <Image alt='icon arrow up' mr={2} src="/images/shared/icon-arrow-up.svg"/>
                   {upvotes?.length}
                 </Button>
                 <Flex alignItems="center" gap={2}>
-                  <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
+                  <Image alt='comments icon' w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
                   <Text fontWeight="bold">{comments?.length}</Text>
                 </Flex>
               </Flex>
             )}
             {isLargerThanMD && (
               <Flex alignItems="center" gap={2}>
-              <Image w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
+              <Image alt='comments icon' w="18px" h="16px" src="/images/shared/icon-comments.svg"/>
               <Text fontWeight="bold">{comments?.length}</Text>
             </Flex>
             )}

@@ -21,6 +21,7 @@ const Header = ({ onClick, hamburgerClicked }: HeaderProps) => {
         <Text fontSize="13px" fontWeight="medium" color="white">Feedback Board</Text>
       </Flex>
         <Image 
+          alt='icon hamburger'
           _hover={{cursor: "pointer"}} 
           onClick={onClick}  
           h="17px" 
