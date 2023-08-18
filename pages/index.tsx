@@ -17,7 +17,7 @@ const Home = () => {
     setHamburgerClicked(!hamburgerClicked);
   }
   return (
-    <Flex direction={{base:"column", lg: "row"}} px={{md: "40px"}} pt={{md: "56px"}} bg="#F2F4FE" pos="relative">
+    <Flex justifyContent="center" direction={{base:"column", lg: "row"}} px={{md: "40px"}} py={{md: "56px"}} bg="#F2F4FE" pos="relative">
       {isLargerThanLG && (
         <Box mr="30px">          
           <Board />
