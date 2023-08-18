@@ -7,7 +7,7 @@ const FilterHeader = () => {
   const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
 
   return (
-    <Flex  borderRadius={isLargerThanMD ? 12 : "none" } py="8px" px="24px" bg="#373F68" justifyContent="space-between">
+    <Flex  borderRadius={{md: 12}} py={{base: "8px", md: "24px"}} px="24px" bg="#373F68" justifyContent="space-between">
       <Flex gap={8}>
         {isLargerThanMD && (  
           <Flex gap={3} alignItems="center">
