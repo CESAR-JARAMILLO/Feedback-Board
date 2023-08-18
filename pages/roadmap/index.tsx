@@ -58,8 +58,8 @@ const RoadmapPage = () => {
   
   
   return (
-    <Box minH="100vh"  px={isLargerThanMD ? "40px" : "none"}  bg="#F2F4FE" overflowX="hidden">
-    <Flex py="26px" mt={isLargerThanMD ? "56px" : "none"} borderRadius={isLargerThanMD ? 16 : 0} px="24px" bg="#373F68" color="#FFF" fontSize="13px" justifyContent="space-between" alignItems="center">
+    <Box minH="100vh"  px={{ xl: "165px", lg: "100px", md: "40px" }}  bg="#F2F4FE" overflowX="hidden">
+    <Flex py="26px" mt={{md: "56px"}} borderRadius={{md: 16}} px="24px" bg="#373F68" color="#FFF" fontSize="13px" justifyContent="space-between" alignItems="center">
       <Flex direction="column">
         <Flex as="button" onClick={() => router.push("/")} gap={2} alignItems="center">
           <ChevronLeftIcon boxSize={5} />
