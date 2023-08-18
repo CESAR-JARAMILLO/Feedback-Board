@@ -1,5 +1,7 @@
 import { Box, Flex, Link, Text, useMediaQuery } from '@chakra-ui/react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 interface RoadmapItem {
   name: string;
@@ -13,8 +15,36 @@ const roadmapItems: RoadmapItem[] = [
 ];
 
 const RoadmapCard = () => {
+  const [statusCounts, setStatusCounts] = useState<{ [key: string]: number }>({});
   const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
+  const supabase = useSupabaseClient()
   const router = useRouter()
+
+  useEffect(() => {
+    const getStatus = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('suggestions')
+          .select('status');
+
+        if (error) {
+          console.error("An error occurred:", error);
+          return;
+        }
+
+        // Handle Success
+        const counts: { [key: string]: number } = {};
+        data?.forEach((item) => {
+          counts[item.status] = (counts[item.status] || 0) + 1;
+        });
+        setStatusCounts(counts);
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      }
+    };
+
+    getStatus();
+  }, []);
 
   return (
     <Flex borderRadius={16} w={isLargerThanMD ? "240px" : "none" } p="24px" gap={6} overflow="hidden" alignItems="center" justifyContent="flex-start" bg="#FFF" direction="column" >
@@ -36,7 +66,9 @@ const RoadmapCard = () => {
           />
           <Text color="#647196" fontSize="16px" >{item.name}</Text>
         </Flex>
-        <Text color="#647196" fontWeight="bold" fontSize="16px"  >2</Text>
+        <Text color="#647196" fontWeight="bold" fontSize="16px">
+          {statusCounts[item.name] || 0}
+        </Text>
       </Flex>
       ))}
     </Flex>
