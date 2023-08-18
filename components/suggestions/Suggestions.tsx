@@ -31,12 +31,11 @@ const Suggestions = () => {
         console.error("Unexpected error:", error);
       } finally {
         // Restet loading state
-        router.push('/')
       }
     }
 
     getSuggestions()
-  }, [router, supabase])
+  }, [supabase])
 
   const handleClick = (id: string) => () => {
     setSelectedSuggestionId(id);
