@@ -5,6 +5,7 @@ import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 import { SelectedSuggestionProvider } from '@/components/context/SelectedSuggestionContext'
 import { CurrentUserProfileProvider } from '@/components/context/CurrentUserProfileContext'
+import { SelectedFilterProvider } from '@/components/context/SelectedFilterContext'
 
 export default function App({ Component, pageProps }: AppProps<{ initialSession: Session }>) {
   const [supabaseClient] = useState(() => createPagesBrowserClient())
@@ -17,7 +18,9 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
       >
         <CurrentUserProfileProvider>
           <SelectedSuggestionProvider>
-            <Component {...pageProps} />
+            <SelectedFilterProvider>
+              <Component {...pageProps} />
+            </SelectedFilterProvider>
           </SelectedSuggestionProvider>
         </CurrentUserProfileProvider>
       </SessionContextProvider>
