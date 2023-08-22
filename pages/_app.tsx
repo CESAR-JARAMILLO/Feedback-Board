@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { SelectedSuggestionProvider } from '@/components/context/SelectedSuggestionContext'
 import { CurrentUserProfileProvider } from '@/components/context/CurrentUserProfileContext'
 import { SelectedFilterProvider } from '@/components/context/SelectedFilterContext'
+import { SuggestionsSortProvider } from '@/components/context/SuggestionsSortContext'
 
 export default function App({ Component, pageProps }: AppProps<{ initialSession: Session }>) {
   const [supabaseClient] = useState(() => createPagesBrowserClient())
@@ -19,7 +20,9 @@ export default function App({ Component, pageProps }: AppProps<{ initialSession:
         <CurrentUserProfileProvider>
           <SelectedSuggestionProvider>
             <SelectedFilterProvider>
-              <Component {...pageProps} />
+              <SuggestionsSortProvider>
+                <Component {...pageProps} />
+              </SuggestionsSortProvider>
             </SelectedFilterProvider>
           </SelectedSuggestionProvider>
         </CurrentUserProfileProvider>
