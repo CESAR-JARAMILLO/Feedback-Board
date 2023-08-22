@@ -44,7 +44,7 @@ const RoadmapCard = () => {
     };
 
     getStatus();
-  }, []);
+  }, [supabase]);
 
   return (
     <Flex borderRadius={16} w={isLargerThanMD ? "240px" : "none" } p="24px" gap={6} overflow="hidden" alignItems="center" justifyContent="flex-start" bg="#FFF" direction="column" >
