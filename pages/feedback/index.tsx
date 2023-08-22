@@ -151,7 +151,7 @@ const Feedback = () => {
 
   return (
     <Box p="24px" px={{ xl: "350px", lg: "160px", md: "40px" }} minH="100vh" bg="#F2F4FE">
-      <FeedbackHeader />
+      <FeedbackHeader display='block' />
 
       <Flex gap={{md: 10}} fontSize="13px" p="24px"  px={{md: "32px"}} py={{md: "28px"}} direction={{md: "row"}} bg="#FFF" borderRadius={10}>
       {isLargerThanMD && (
