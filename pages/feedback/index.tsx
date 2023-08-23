@@ -94,7 +94,7 @@ const Feedback = () => {
     getComments()
     getUpvotes()
     getSuggestion()
-  }, [upvotes, comments, selectedSuggestionId, supabase])
+  }, [selectedSuggestionId, supabase])
 
   const addUpvote = async () => {
     try {
