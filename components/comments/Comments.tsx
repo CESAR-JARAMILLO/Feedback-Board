@@ -7,32 +7,40 @@ import SelectedSuggestionContext  from '@/components/context/SelectedSuggestionC
 const Comments = () => {
   const [comments, setComments] = useState<any[] | null>(null)
   const supabase = useSupabaseClient()
-  const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
+  const { selectedSuggestionId } = useContext(SelectedSuggestionContext);
 
-  useEffect(() => {
-    const getComments = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('comments')
-          .select()
-          .eq('suggestion_id', selectedSuggestionId)
-  
-        if (error) {
-          console.error("An error occurred:", error);
-          return;
-        }
-        
-        setComments(data)
-  
-      } catch (error) {
-        console.error("Unexpected error:", error);
-      } finally {
-        // Reset loading state
+useEffect(() => {
+  const getCommentsAndReplies = async () => {
+    try {
+      const { data: commentsData, error: commentsError } = await supabase
+        .from('comments')
+        .select()
+        .eq('suggestion_id', selectedSuggestionId);
+
+      const { data: repliesData, error: repliesError } = await supabase
+        .from('replies')
+        .select()
+        .eq('suggestion_id', selectedSuggestionId);
+
+      if (commentsError || repliesError) {
+        console.error("An error occurred:", commentsError || repliesError);
+        return;
       }
-    };
-  
-    getComments();
-  }, [comments, selectedSuggestionId, supabase]);
+
+      const commentsWithReplies = commentsData.map(comment => ({
+        ...comment,
+        replies: repliesData.filter(reply => reply.comment_id === comment.id),
+      }));
+
+      setComments(commentsWithReplies);
+
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    }
+  };
+
+  getCommentsAndReplies();
+}, [selectedSuggestionId, supabase]);
 
   return (
     <Flex direction="column" bg="#FFF" mt="24px" borderRadius={10}>
