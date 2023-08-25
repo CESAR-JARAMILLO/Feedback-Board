@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
+import { Avatar, Box, Divider, Flex, Text } from '@chakra-ui/react'
 import ReplyComment from './AddReply';
 import { useState } from 'react';
 import Reply from './Reply';
@@ -32,15 +32,16 @@ const Comment = ({ comment }: CommentsProps) => {
         </Flex>
         <Text onClick={handleReply} fontWeight="semibold" color="#4661E6" as="button">Reply</Text>
       </Flex>
-      <Text mt="24px" color="#647196">
+      <Text mt="24px" ml="66px" color="#647196">
         {comment.comment}
       </Text>
       {comment.replies?.map((reply: Reply, index: number) => (
-        <Reply reply={reply.reply} key={index} />
+        <Reply leftMargin="66px" reply={reply} key={index} />
       ))}
       <Flex display={replyDisplay}>
       <ReplyComment commentId={comment.id} />
     </Flex>
+    <Divider mt="24px" />
     </Box>
   )
 }
