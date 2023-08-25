@@ -1,6 +1,7 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
 import ReplyComment from './AddReply';
 import { useState } from 'react';
+import Reply from './Reply';
 
 interface CommentsProps {
   comment: any;
@@ -35,9 +36,7 @@ const Comment = ({ comment }: CommentsProps) => {
         {comment.comment}
       </Text>
       {comment.replies?.map((reply: Reply, index: number) => (
-        <Text key={index} color="#647196">
-          {reply.reply}
-        </Text>
+        <Reply reply={reply.reply} key={index} />
       ))}
       <Flex display={replyDisplay}>
       <ReplyComment commentId={comment.id} />
