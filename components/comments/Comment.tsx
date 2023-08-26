@@ -9,7 +9,6 @@ interface CommentsProps {
 
 interface Reply {
   reply: string;
-  // include other properties of a reply as needed
 }
 
 
