@@ -18,7 +18,7 @@ const Reply = ({ reply, leftMargin } : ReplyProps) => {
             <Text color="#647196" >{reply.tag_name}</Text>
           </Box>
         </Flex>
-        <Text onClick={() => {}} fontWeight="semibold" color="#4661E6" as="button">Reply</Text>
+{/*         <Text onClick={() => {}} fontWeight="semibold" color="#4661E6" as="button">Reply</Text> */}
       </Flex>
       <Text mt="24px" ml={leftMargin}color="#647196">
         {reply.reply}
