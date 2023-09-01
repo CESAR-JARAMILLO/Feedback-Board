@@ -17,7 +17,7 @@ const EditPage = () => {
   const [newCategory, setNewCategory] = useState<string>('');
   const [newDetail, setNewDetail] = useState<string>('');
   const [newStatus, setNewStatus] = useState<string>('');
-  const { selectedSuggestionId, setSelectedSuggestionId } = useContext(SelectedSuggestionContext);
+  const { selectedSuggestionId } = useContext(SelectedSuggestionContext);
   const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
   const supabase = useSupabaseClient()
   const router = useRouter()
