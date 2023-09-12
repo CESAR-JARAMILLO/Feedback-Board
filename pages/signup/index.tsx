@@ -57,14 +57,11 @@ const Signup = () => {
     setConfirmEmail('');
     setConfirmPassword('');
   };
-  
-
-  const formWidth = useBreakpointValue({ base: "90%", md: "60%", lg: "40%" });
 
   return (
     <Box minHeight="100vh" mt={10}>
       <Flex mt="6em" alignItems="center" justifyContent="center">
-      <Box width={formWidth}>
+      <Box width={{ base: "90%", md: "60%", lg: "40%" }}>
       {errorMessage && (
           <Alert borderRadius={20} mb={5} status='error'>
             <AlertIcon />
