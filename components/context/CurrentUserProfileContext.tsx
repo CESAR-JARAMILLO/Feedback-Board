@@ -9,7 +9,6 @@ interface UserProfile {
 
 interface CurrentUserProfileContextProps {
   userProfile: UserProfile | null;
-  // You can add more functions here if needed
 }
 
 const CurrentUserProfileContext = createContext<CurrentUserProfileContextProps>({
