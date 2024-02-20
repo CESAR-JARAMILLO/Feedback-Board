@@ -5,6 +5,7 @@ interface UserProfile {
   id: string;
   full_name: string;
   tag: string;
+  avatar_url: string;
 }
 
 interface CurrentUserProfileContextProps {

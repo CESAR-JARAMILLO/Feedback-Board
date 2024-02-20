@@ -24,7 +24,9 @@ const AddReply = ({ commentId } : AddReplyProps) => {
           user_id: user?.id,
           comment_id: commentId,
           tag_name: userProfile?.tag,
-          reply: reply
+          reply: reply,
+          full_name: userProfile?.full_name,
+          avatar_url: userProfile?.avatar_url,
         })
   
       if (error) {
